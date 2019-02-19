@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CRUD-PRODUCTS</title>
+    <title>CRUD-PRODUCTS</title>
 </head>
 <body>
-    <?php 
-
+    <?php
         include('conection.php');
 
+        $solicitud = "SELECT * FROM datos ORDER BY price ASC";
+        $result = mysqli_query($conection, $solicitud);
     ?>
-    <table border="2">
+    <a href="create.php">Create Product</a>
+    <table border='1' style="padding: 12px 12px;">
         <thead>
             <tr>
                 <td>Name</td>
+                <td>Price</td>
+                <td>Actions</td>
             </tr>
         </thead>
-
         <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+            <?php while ($list = mysqli_fetch_array($result)) { ?>
+                    <tr>
+                        <td><?php echo $list['name'] ?></td>
+                        <td><?php echo $list['price'] ?></td>
+                        <td>
+                            <a href="<?php echo "edit.php?id=".$list['ID'] ?>">Edit</a>
+                            <a href="<?php echo "delete.php?id=".$list['ID'] ?>">Delete</a>
+                        </td>
+                    </tr>      
+            <?php }?>
         </tbody>
     </table>
 </body>
